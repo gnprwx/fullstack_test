@@ -1,18 +1,19 @@
 {
-  "name": "fullstack_test",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "pg": "^8.11.3"
-  }
+    "name": "fullstack_test",
+    "version": "1.0.0",
+    "description": "this is just a simple full stack test app",
+    "main": "server.js",
+    "type": "module",
+    "scripts": {
+        "dev": "node --watch server.js",
+        "start": "node server.js"
+    },
+    "keywords": [],
+    "author": "greg pappas",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "pg": "^8.11.3"
+    }
 }
