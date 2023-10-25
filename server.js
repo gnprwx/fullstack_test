@@ -29,16 +29,25 @@ app.get("/fst/band", (req, res) => {
     });
 });
 
-app.get("/fst/band/:id", (req, res) => {
+app.get("/fst/bands/", (req, res) => {
     const id = req.params.id;
     client
         .query(
-            `SELECT musicians.member1, musicians.member2, musicians.member3, musicians.member4, band.name, band.genre FROM musicians INNER JOIN band ON musicians.band_id = band.id WHERE band.id = $1`,
-            [id]
+            `SELECT band.name, band.genre, musicians.member1, musicians.member2, musicians.member3, musicians.member4 FROM musicians INNER JOIN band ON musicians.band_id = band.id`
         )
         .then((data) => {
-            res.send(data.rows[0]);
+            res.send(data.rows);
         });
+});
+
+app.use("/", (req, res) => {
+    res.sendStatus(404);
+});
+
+app.use((err, res, _, next) => {
+    console.error(err);
+    res.sendStatus(500);
+    next();
 });
 
 app.listen(PORT, () => {
