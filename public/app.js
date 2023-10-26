@@ -1,6 +1,6 @@
 const bandInfo = document.querySelector("#band-info");
 
-await fetch("fst/bands").then((response) => {
+await fetch("api/bands").then((response) => {
     response.json().then((data) => {
         data.forEach((band) => {
             return (bandInfo.innerHTML += `
