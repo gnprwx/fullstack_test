@@ -15,7 +15,7 @@ app.use(express.json());
 
 await client.connect();
 
-app.get("/api/musicians", (req, res, next) => {
+app.get("/api/musicians", (_, res, next) => {
     client
         .query(`SELECT * FROM musicians`)
         .then((data) => {
@@ -24,7 +24,7 @@ app.get("/api/musicians", (req, res, next) => {
         .catch(next);
 });
 
-app.get("/api/band", (req, res, next) => {
+app.get("/api/band", (_, res, next) => {
     client
         .query(`SELECT * FROM band`)
         .then((data) => {
@@ -53,7 +53,7 @@ app.delete("/api/bands/:id", (req, res, next) => {
         ])
         .then((data) => {
             if (data.rows[0] === undefined) {
-                res.sendStatus(404);
+                return res.sendStatus(404);
             }
         });
     client
@@ -71,7 +71,7 @@ app.post("/api/musicians/", (req, res, next) => {
             `INSERT INTO musicians(member1, member2, member3, member4, band_id) VALUES ($1, $2, $3, $4, $5)`,
             [member1, member2, member3, member4, band_id]
         )
-        .then((data) => {
+        .then(() => {
             res.sendStatus(201);
         })
         .catch(next);
@@ -92,7 +92,7 @@ app.patch("/api/band/:id", (req, res, next) => {
     const id = req.params.id;
     client.query(`SELECT * FROM band WHERE id=$1`, [id]).then((data) => {
         if (data.rows[0] === undefined) {
-            res.sendStatus(404);
+            return res.sendStatus(404);
         }
     });
     client
@@ -106,7 +106,7 @@ app.patch("/api/band/:id", (req, res, next) => {
         .catch(next);
 });
 
-app.use("/", (req, res) => {
+app.use("/", (_, res) => {
     res.sendStatus(404);
 });
 
