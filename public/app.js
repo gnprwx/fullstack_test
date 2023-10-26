@@ -1,17 +1,21 @@
 const bandInfo = document.querySelector("#band-info");
 
-await fetch("fst/band").then((response) => {
+await fetch("fst/bands").then((response) => {
     response.json().then((data) => {
-        data.forEach((element) => {
-            const band = document.createElement("div");
-            band.classList.add("band");
-            const bandName = document.createElement("p");
-            const genre = document.createElement("p");
-            bandName.textContent = element.name;
-            genre.textContent = element.genre;
-            band.appendChild(bandName);
-            band.appendChild(genre);
-            bandInfo.appendChild(band);
+        data.forEach((band) => {
+            return (bandInfo.innerHTML += `
+        <div class='band-container'>
+            <h1>${band.name}</h1>
+            <h2>${band.genre}</h2>
+            <h3>Band Members</h3>
+            <ul>
+                <li>${band.member1}</li>
+                <li>${band.member2}</li>
+                <li>${band.member3}</li>
+                <li>${band.member4}</li>
+            </ul>
+        </div>
+        `);
         });
     });
 });
