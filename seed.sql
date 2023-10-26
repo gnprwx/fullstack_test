@@ -9,7 +9,7 @@ INSERT INTO band(name, genre) VALUES
 ('Crimson Fusion', 'Jazz Fusion'),
 ('Radient Pulse', 'EDM');
  
-/* 
+
 INSERT INTO musicians(member1, member2, member3, member4, band_id) VALUES
 ('Grace Johnson', 'Jacob Davis', 'Sophie Wilson', 'Ethan Thompson', 1),
 ('Ethan Murphy', 'Isabella Mitchell', 'Noah Turner', 'Sophia Ward', 2),
@@ -20,4 +20,4 @@ INSERT INTO musicians(member1, member2, member3, member4, band_id) VALUES
 ('James Morgan', 'Lily Watson', 'Samuel Hayes', 'Grace Butler', 6),
 ('Joseph Perry', 'Aria Carter', 'David Brooks', 'Sofia Russell', 7),
 ('Michael Cox', 'Zoe Coleman', 'Gabriel Wright', 'Victoria Jenkins', 8),
-('Jackson Bell', 'Penelope Murphy', 'Sebastian Powell', 'Evelyn Rogers', 9); */
+('Jackson Bell', 'Penelope Murphy', 'Sebastian Powell', 'Evelyn Rogers', 9);
