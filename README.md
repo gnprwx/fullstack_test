@@ -1,5 +1,5 @@
 # Fullstack Test
-![sample](https://i.ibb.co/XkKP2Zw/Screenshot-2023-10-25-at-6-40-58-PM.png)
+![sample](https://i.ibb.co/sFzPRNW/Screenshot-2023-10-25-at-6-44-50-PM.png)
 ## This time with more relations and less styling.
 ### Tables
 ![table img](https://i.ibb.co/QjmqcfB/fst-tables.png)
@@ -12,6 +12,6 @@
 - [x] Post new musicians (internal manual request).
 - [x] Patch band information (internal manual request).
 ### Routes to add
-- [x] Patch musicians information (internal manual request).
+- [ ] Patch musicians information (internal manual request).
 ### More stuff to do
-- [x] Double check to make sure all follow proper REST HTTP methods
+- [ ] Double check to make sure all follow proper REST HTTP methods
