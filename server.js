@@ -130,7 +130,7 @@ app.patch("/api/musicians/:id", (req, res, next) => {
         });
     client
         .query(
-            `UPDATE musicians SET musician1 = COALESCE($1, musician1), musician2 = COALESCE($2, musician2), musician3 = COALESCE($3, musician3), musician4 = COALESCE($4, musician4) WHERE id=$5 RETURNING *`,
+            `UPDATE musicians SET musician1 = COALESCE($1, musician1), musician2 = COALESCE($2, musician2), musician3 = COALESCE($3, musician3), musician4 = COALESCE($4, musician4) WHERE band_id=$5 RETURNING *`,
             [musician1, musician2, musician3, musician4, id]
         )
         .then(() => {
