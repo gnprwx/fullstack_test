@@ -7,7 +7,7 @@
 - [x] Get all entries from musicians (internal manual request)
 - [x] Get all entries from band  (internal manual request)
 - [x] Get all entries from bands, which is an inner join. This is what you see on the index.html. It shows the band name, genre, and all the band members.
-- [x] Delete band (members table deleted, then band table to honor foreign key rules) (internal manual request).
+- [x] Delete band (musicians entry deleted, then band entry to honor foreign key rules) (internal manual request).
 - [x] Post new band (internal manual request).
 - [x] Post new musicians (internal manual request).
 - [x] Patch band information (internal manual request).
