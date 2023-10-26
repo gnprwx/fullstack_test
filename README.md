@@ -1,8 +1,8 @@
 # Fullstack Test
-![sample](https://i.ibb.co/sFzPRNW/Screenshot-2023-10-25-at-6-44-50-PM.png)
+![sample](./example.png)
 ## This time with more relations and less styling.
 ### Tables
-![table img](https://i.ibb.co/QjmqcfB/fst-tables.png)
+![table img](./fst_tables.png)
 ### Routes completed
 - [x] Get all entries from musicians (internal manual request)
 - [x] Get all entries from band  (internal manual request)
