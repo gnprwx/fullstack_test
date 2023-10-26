@@ -47,15 +47,19 @@ app.get("/api/bands", (req, res, next) => {
 
 app.delete("/api/bands/:id", (req, res, next) => {
     const id = req.params.id;
-    client.query(`DELETE FROM musicians WHERE musicians.band_id=$1`, [id]);
+    client
+        .query(`DELETE FROM musicians WHERE musicians.band_id=$1 RETURNING *`, [
+            id,
+        ])
+        .then((data) => {
+            if (data.rows[0] === undefined) {
+                res.sendStatus(404);
+            }
+        });
     client
         .query(`DELETE FROM band WHERE id=$1 RETURNING *`, [id])
         .then((data) => {
-            if (data.rows[0] === undefined) {
-                return res.sendStatus(404);
-            } else {
-                res.send(data.rows[0]);
-            }
+            res.send(data.rows[0]);
         })
         .catch(next);
 });
@@ -64,7 +68,7 @@ app.post("/api/musicians/", (req, res, next) => {
     const { member1, member2, member3, member4, band_id } = req.body;
     client
         .query(
-            `INSERT INTO musicians(member1, member2, member3, member4, band_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+            `INSERT INTO musicians(member1, member2, member3, member4, band_id) VALUES ($1, $2, $3, $4, $5)`,
             [member1, member2, member3, member4, band_id]
         )
         .then((data) => {
@@ -86,21 +90,18 @@ app.post("/api/band", (req, res, next) => {
 app.patch("/api/band/:id", (req, res, next) => {
     const { name, genre } = req.body;
     const id = req.params.id;
+    client.query(`SELECT * FROM band WHERE id=$1`, [id]).then((data) => {
+        if (data.rows[0] === undefined) {
+            res.sendStatus(404);
+        }
+    });
     client
-        .query(`SELECT * FROM band WHERE id=$1`, [id])
-        .then((data) => {
-            if (data.rows[0] === undefined) {
-                return res.sendStatus(404);
-            } else {
-                client
-                    .query(
-                        `UPDATE band SET name = COALESCE($1, name), genre = COALESCE($2, genre) WHERE id=$3 RETURNING *`,
-                        [name, genre, id]
-                    )
-                    .then(() => {
-                        res.sendStatus(204);
-                    });
-            }
+        .query(
+            `UPDATE band SET name = COALESCE($1, name), genre = COALESCE($2, genre) WHERE id=$3 RETURNING *`,
+            [name, genre, id]
+        )
+        .then(() => {
+            res.sendStatus(204);
         })
         .catch(next);
 });

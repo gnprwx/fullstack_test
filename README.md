@@ -13,5 +13,6 @@
 - [x] Patch band information (internal manual request).
 ### Routes to add
 - [ ] Patch musicians information (internal manual request).
+- [ ] Single entry get request from bands (internal manual request). 
 ### More stuff to do
 - [ ] Double check to make sure all follow proper REST HTTP methods
