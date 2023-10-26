@@ -34,13 +34,25 @@ app.get("/api/band", (_, res, next) => {
 });
 
 app.get("/api/bands", (req, res, next) => {
-    const id = req.params.id;
     client
         .query(
-            `SELECT band.name, band.genre, musicians.member1, musicians.member2, musicians.member3, musicians.member4, musicians.band_id FROM musicians INNER JOIN band ON musicians.band_id = band.id ORDER BY band.id DESC`
+            `SELECT band.name, band.genre, musicians.musician1, musicians.musician2, musicians.musician3, musicians.musician4, musicians.band_id FROM musicians INNER JOIN band ON musicians.band_id = band.id ORDER BY band.id ASC`
         )
         .then((data) => {
             res.send(data.rows);
+        })
+        .catch(next);
+});
+
+app.get("/api/bands/:id", (req, res, next) => {
+    const id = req.params.id;
+    client
+        .query(
+            `SELECT band.name, band.genre, musicians.musician1, musicians.musician2, musicians.musician3, musicians.musician4, musicians.band_id FROM musicians INNER JOIN band ON musicians.band_id = band.id WHERE musicians.band_id=$1`,
+            [id]
+        )
+        .then((data) => {
+            res.send(data.rows[0]);
         })
         .catch(next);
 });
@@ -65,11 +77,11 @@ app.delete("/api/bands/:id", (req, res, next) => {
 });
 
 app.post("/api/musicians/", (req, res, next) => {
-    const { member1, member2, member3, member4, band_id } = req.body;
+    const { musician1, musician2, musician3, musician4, band_id } = req.body;
     client
         .query(
-            `INSERT INTO musicians(member1, member2, member3, member4, band_id) VALUES ($1, $2, $3, $4, $5)`,
-            [member1, member2, member3, member4, band_id]
+            `INSERT INTO musicians(musician1, musician2, musician3, musician4, band_id) VALUES ($1, $2, $3, $4, $5)`,
+            [musician1, musician2, musician3, musician4, band_id]
         )
         .then(() => {
             res.sendStatus(201);
@@ -99,6 +111,27 @@ app.patch("/api/band/:id", (req, res, next) => {
         .query(
             `UPDATE band SET name = COALESCE($1, name), genre = COALESCE($2, genre) WHERE id=$3 RETURNING *`,
             [name, genre, id]
+        )
+        .then(() => {
+            res.sendStatus(204);
+        })
+        .catch(next);
+});
+
+app.patch("/api/musicians/:id", (req, res, next) => {
+    const { musician1, musician2, musician3, musician4 } = req.body;
+    const id = req.params.id;
+    client
+        .query(`SELECT * FROM musicians WHERE band_id=$1`, [id])
+        .then((data) => {
+            if (data.rows[0] === undefined) {
+                return res.sendStatus(404);
+            }
+        });
+    client
+        .query(
+            `UPDATE musicians SET musician1 = COALESCE($1, musician1), musician2 = COALESCE($2, musician2), musician3 = COALESCE($3, musician3), musician4 = COALESCE($4, musician4) WHERE id=$5 RETURNING *`,
+            [musician1, musician2, musician3, musician4, id]
         )
         .then(() => {
             res.sendStatus(204);

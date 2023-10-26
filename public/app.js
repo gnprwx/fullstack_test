@@ -9,10 +9,10 @@ await fetch("api/bands").then((response) => {
             <h2>${band.genre}</h2>
             <h3>Band Members</h3>
             <ul>
-                <li>${band.member1}</li>
-                <li>${band.member2}</li>
-                <li>${band.member3}</li>
-                <li>${band.member4}</li>
+                <li>${band.musician1}</li>
+                <li>${band.musician2}</li>
+                <li>${band.musician3}</li>
+                <li>${band.musician4}</li>
             </ul>
         </div>
         `);

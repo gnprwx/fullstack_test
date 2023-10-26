@@ -10,9 +10,8 @@ INSERT INTO band(name, genre) VALUES
 ('Radient Pulse', 'EDM');
  
 
-INSERT INTO musicians(member1, member2, member3, member4, band_id) VALUES
+INSERT INTO musicians(musician1, musician2, musician3, musician4, band_id) VALUES
 ('Grace Johnson', 'Jacob Davis', 'Sophie Wilson', 'Ethan Thompson', 1),
-('Ethan Murphy', 'Isabella Mitchell', 'Noah Turner', 'Sophia Ward', 2),
 ('Ethan Murphy', 'Isabella Mitchell', 'Noah Turner', 'Sophia Ward', 2),
 ('Lucas Cooper', 'Harper Lewis', 'Benjamin Nelson', 'Amelia Foster', 3),
 ('Henry Reed', 'Charlotte Bennett', 'Alexander Simmons', 'Abigail Hughes', 4),

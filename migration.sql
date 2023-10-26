@@ -1,9 +1,9 @@
 CREATE TABLE "musicians"(
     "id" SERIAL NOT NULL,
-    "member1" TEXT NOT NULL,
-    "member2" TEXT,
-    "member3" TEXT,
-    "member4" TEXT,
+    "musician1" TEXT NOT NULL,
+    "musician2" TEXT,
+    "musician3" TEXT,
+    "musician4" TEXT,
     "band_id" INTEGER NOT NULL
 );
 ALTER TABLE
