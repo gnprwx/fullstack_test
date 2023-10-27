@@ -67,24 +67,23 @@ app.delete("/api/bands/:id", (req, res, next) => {
             if (data.rows[0] === undefined) {
                 return res.sendStatus(404);
             }
-        });
-    client
-        .query(`DELETE FROM band WHERE id=$1 RETURNING *`, [id])
-        .then((data) => {
-            res.send(data.rows[0]);
+            client.query(`DELETE FROM band WHERE id=$1 RETURNING *`, [id]);
+            return res.sendStatus(200);
         })
         .catch(next);
 });
 
 app.post("/api/musicians/", (req, res, next) => {
     const { musician1, musician2, musician3, musician4, band_id } = req.body;
+    // validation to prevent post without all of the above
     client
         .query(
-            `INSERT INTO musicians(musician1, musician2, musician3, musician4, band_id) VALUES ($1, $2, $3, $4, $5)`,
+            `INSERT INTO musicians(musician1, musician2, musician3, musician4, band_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
             [musician1, musician2, musician3, musician4, band_id]
         )
-        .then(() => {
-            res.sendStatus(201);
+        .then((data) => {
+            res.send(data.rows[0]);
+            res.statusCode = 201;
         })
         .catch(next);
 });
@@ -102,18 +101,17 @@ app.post("/api/band", (req, res, next) => {
 app.patch("/api/band/:id", (req, res, next) => {
     const { name, genre } = req.body;
     const id = req.params.id;
-    client.query(`SELECT * FROM band WHERE id=$1`, [id]).then((data) => {
-        if (data.rows[0] === undefined) {
-            return res.sendStatus(404);
-        }
-    });
-    client
-        .query(
-            `UPDATE band SET name = COALESCE($1, name), genre = COALESCE($2, genre) WHERE id=$3 RETURNING *`,
-            [name, genre, id]
-        )
-        .then(() => {
-            res.sendStatus(204);
+    return client
+        .query(`SELECT * FROM band WHERE id=$1`, [id])
+        .then((data) => {
+            if (data.rows[0] === undefined) {
+                return res.sendStatus(404);
+            }
+            client.query(
+                `UPDATE band SET name = COALESCE($1, name), genre = COALESCE($2, genre) WHERE id=$3 RETURNING *`,
+                [name, genre, id]
+            );
+            return res.sendStatus(204);
         })
         .catch(next);
 });
@@ -127,14 +125,11 @@ app.patch("/api/musicians/:id", (req, res, next) => {
             if (data.rows[0] === undefined) {
                 return res.sendStatus(404);
             }
-        });
-    client
-        .query(
-            `UPDATE musicians SET musician1 = COALESCE($1, musician1), musician2 = COALESCE($2, musician2), musician3 = COALESCE($3, musician3), musician4 = COALESCE($4, musician4) WHERE band_id=$5 RETURNING *`,
-            [musician1, musician2, musician3, musician4, id]
-        )
-        .then(() => {
-            res.sendStatus(204);
+            client.query(
+                `UPDATE musicians SET musician1 = COALESCE($1, musician1), musician2 = COALESCE($2, musician2), musician3 = COALESCE($3, musician3), musician4 = COALESCE($4, musician4) WHERE band_id=$5 RETURNING *`,
+                [musician1, musician2, musician3, musician4, id]
+            );
+            return res.sendStatus(204);
         })
         .catch(next);
 });
